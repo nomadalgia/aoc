@@ -14,7 +14,7 @@ main = interact (show . solve . parse)
 
 parse :: String -> [(Int, [Int])]
 parse = mapMaybe parseLine . lines
-  where parseLine = fmap (bimap read (map read . words)) . stripInfix ":"
+  where parseLine = uncons . map read . words . delete ':'
 
 solve :: [(Int, [Int])] -> (Int, Int)
 solve = p1 &&& p2
