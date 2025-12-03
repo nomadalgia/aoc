@@ -1,4 +1,4 @@
-{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE NoImplicitPrelude, OverloadedStrings #-}
 module Day02 where
 
 import Relude
@@ -32,4 +32,4 @@ isDoubled :: Eq a => [a] -> Bool
 isDoubled xs = uncurry (==) $ (length xs `div` 2) `splitAt` xs
 
 isRepeated :: Eq a => [a] -> Bool
-isRepeated xs = or $ map allSame $ map (flip chunksOf xs) [1 .. length xs `div` 2]
+isRepeated xs = any allSame $ map (`chunksOf` xs) [1 .. length xs `div` 2]
