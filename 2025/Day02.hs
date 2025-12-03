@@ -15,8 +15,8 @@ solve :: [(Integer, Integer)] -> (Integer, Integer)
 solve = (p1 &&& p2) . common
 
 p1, p2 :: [[Integer]] -> Integer
-p1 = sum . concatMap (filter (isDoubled . show))
-p2 = sum . concatMap (filter (isRepeated . show))
+p1 = sum . concatMap (filter $ isDoubled . show)
+p2 = sum . concatMap (filter $ isRepeated . show)
 
 common :: [(Integer, Integer)] -> [[Integer]]
 common = map $ uncurry enumFromTo
@@ -33,3 +33,10 @@ isDoubled xs = uncurry (==) $ (length xs `div` 2) `splitAt` xs
 
 isRepeated :: Eq a => [a] -> Bool
 isRepeated xs = any allSame $ map (`chunksOf` xs) [1 .. length xs `div` 2]
+
+isDoubled' :: Integer -> Bool
+isDoubled' x | odd numDigits = False
+             | otherwise     = l == r
+  where
+    (l, r) = x `quotRem` (10 ^ (numDigits `div` 2))
+    numDigits = succ $ floor $ logBase 10 $ fromIntegral x
